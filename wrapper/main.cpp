@@ -59,7 +59,7 @@ long long milliseconds_now() {
 
 FILE * openlog()
 {
-	char fname[]="wrapper0.log";
+	char fname[]="fpscap_0.log";
 	fname[7] = '0' + (gLoglines >> 20); // new file every ~1024k lines
 
 	return fopen(fname, "a");
