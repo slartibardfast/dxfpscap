@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrapper", "wrapper\wrapper.vcproj", "{CBD37F04-EA11-463B-9EA5-D4560E14E8C9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrappergen", "wrappergen\wrappergen.vcproj", "{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBD37F04-EA11-463B-9EA5-D4560E14E8C9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CBD37F04-EA11-463B-9EA5-D4560E14E8C9}.Debug|Win32.Build.0 = Debug|Win32
+		{CBD37F04-EA11-463B-9EA5-D4560E14E8C9}.Release|Win32.ActiveCfg = Release|Win32
+		{CBD37F04-EA11-463B-9EA5-D4560E14E8C9}.Release|Win32.Build.0 = Release|Win32
+		{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}.Debug|Win32.Build.0 = Debug|Win32
+		{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}.Release|Win32.ActiveCfg = Release|Win32
+		{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
