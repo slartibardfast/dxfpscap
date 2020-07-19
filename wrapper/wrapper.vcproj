@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="wrapper"
 	ProjectGUID="{CBD37F04-EA11-463B-9EA5-D4560E14E8C9}"
+	RootNamespace="wrapper"
 	>
 	<Platforms>
 		<Platform
@@ -11,6 +12,9 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<DefaultToolFile
+			FileName="masm.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
@@ -26,6 +30,9 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
+				Name="MASM"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -36,7 +43,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="..\libs\DirectX81SDK\include"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -50,6 +59,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				ModuleDefinitionFile="exports.def"
+				GenerateDebugInformation="true"
+				AssemblyDebug="1"
 				OptimizeForWindows98="2"
 			/>
 			<Tool
@@ -81,13 +92,16 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="MASM"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -101,6 +115,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="..\libs\DirectX81SDK\include"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -113,7 +128,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				ModuleDefinitionFile="exports.def"
 				OptimizeForWindows98="2"
+				LinkTimeCodeGeneration="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -155,6 +172,14 @@
 			</File>
 			<File
 				RelativePath=".\interfacequery.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\IsDebuggerPresent.asm"
+				>
+			</File>
+			<File
+				RelativePath=".\IsDebuggerPresent.cpp"
 				>
 			</File>
 			<File

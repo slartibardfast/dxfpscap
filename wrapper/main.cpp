@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define STRICT
 #define WIN32_LEAN_AND_MEAN
+#define _CRT_SECURE_NO_DEPRECATE
 
 #include <windows.h>
 #include <shlobj.h>
