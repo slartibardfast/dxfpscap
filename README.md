@@ -1,3 +1,12 @@
+
+dxfpscap
+=========
+limits 3D Games with QueryPerformanceCounter() API, most instructions are per original dxwrapper.
+
+tested with VS 2005 & Windows 98 SE, largely with Star Wars:Shadows of the Empire.
+
+requires at least a pentium pro for accurate timing
+
 dxwrapper
 =========
 
