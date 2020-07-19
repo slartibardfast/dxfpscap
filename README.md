@@ -5,6 +5,8 @@ limits 3D Games with QueryPerformanceCounter() API to 30 Frames Per Second
 
 requires at least a pentium pro for accurate timing API to function
 
+it is also completely agnostic about VSYNC, frame limit will align if it is enabled.
+
 for updates or to request different frame rate caps please go to the github:
 
 https://github.com/slartibardfast/dxfpscap
