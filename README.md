@@ -7,6 +7,8 @@ tested with VS 2005 & Windows 98 SE, largely with Star Wars:Shadows of the Empir
 
 requires at least a pentium pro for accurate timing
 
+release with instructions for patching .exe 's to use wrapper on Windows 98 SE to follow soon.
+
 dxwrapper
 =========
 
