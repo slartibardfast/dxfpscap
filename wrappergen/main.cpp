@@ -1,4 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_DEPRECATE
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -7,7 +8,7 @@
 
 #define VERSION "dxfpscap 1.20200717 based on ddwrappergen 1.130524 (c)2013 Jari Komppa http://iki.fi/sol/"
 
-//#define DISABLE_LOGGING
+#define DISABLE_LOGGING
 //#define DISABLE_CRITICAL_SECTION
 //#define DISABLE_PASSTHROUGH
 //#define ADD_UNDEFINED_MACRO
@@ -396,6 +397,17 @@ void printH(int aIfaceNo)
 
 	banner(f);
 	fprintf(f, "#pragma once\n");
+#ifndef DISABLE_FPSCAP
+	if (
+		(iface->mName == "IDirect3DDevice") ||
+		(iface->mName == "IDirect3DDevice2") ||
+		(iface->mName == "IDirect3DDevice3") ||
+		(iface->mName == "IDirect3DDevice7")
+	) {
+		fprintf(f, "\n");
+		fprintf(f, "#include \"timer.h\"\n\n");
+	}
+#endif
 	fprintf(f, "\n");
 	fprintf(f, "class my%s : public %s\n", iface->mName.c_str(), iface->mName.c_str());
 	fprintf(f, "{\n"
@@ -422,6 +434,19 @@ void printH(int aIfaceNo)
 #else
 	fprintf(f, "\n"
 		   "  %s * mOriginal;\n", iface->mName.c_str());
+#endif
+#ifndef DISABLE_FPSCAP
+	if (
+		(iface->mName == "IDirect3DDevice") ||
+		(iface->mName == "IDirect3DDevice2") ||
+		(iface->mName == "IDirect3DDevice3") ||
+		(iface->mName == "IDirect3DDevice7")
+	) {
+		fprintf(f, "private:\n");
+		fprintf(f, "  Timer Timer;\n");
+		fprintf(f, "  static long long LastFrameTime;\n");
+		fprintf(f, "  long long FPSLimit;\n");
+	}
 #endif
 	fprintf(f, "};\n\n");
 	fclose(f);
@@ -508,10 +533,19 @@ void printCpp(int aIfaceNo)
 	banner(f);
 
 	fprintf(f, "#include \"wrapper.h\"\n");	
-#ifndef DISABLE_FPSCAP
-	fprintf(f, "#include \"timer.h\"\n\n");	
-#endif
 	fprintf(f, "#include \"my%s.h\"\n\n", iface->mName.c_str());
+
+#ifndef DISABLE_FPSCAP
+	if (
+		(iface->mName == "IDirect3DDevice") ||
+		(iface->mName == "IDirect3DDevice2") ||
+		(iface->mName == "IDirect3DDevice3") ||
+		(iface->mName == "IDirect3DDevice7")
+	) {
+		//fprintf(f, "Timer my%s::Timer;\n", iface->mName.c_str());
+		fprintf(f, "long long my%s::LastFrameTime;\n\n", iface->mName.c_str());
+	}
+#endif
 
 #ifdef DISABLE_PASSTHROUGH
 	fprintf(f, "my%s::my%s()\n", iface->mName.c_str(), iface->mName.c_str());
@@ -527,14 +561,15 @@ void printCpp(int aIfaceNo)
 #else
 #ifndef DISABLE_FPSCAP
 	if (
-		(iface->mName == "myIDirect3DDevice2") ||
-		(iface->mName == "myIDirect3DDevice3") ||
-		(iface->mName == "myIDirect3DDevice7")
+		(iface->mName == "IDirect3DDevice") ||
+		(iface->mName == "IDirect3DDevice2") ||
+		(iface->mName == "IDirect3DDevice3") ||
+		(iface->mName == "IDirect3DDevice7")
 	) {
 		fprintf(f, "\n"
-		   "%s::LastFrameTime = timer.GetCount();");
+		   "  my%s::LastFrameTime = my%s::Timer.GetCount();", iface->mName.c_str(), iface->mName.c_str());
 		fprintf(f, "\n"
-		   "%s::FPSLimit = %d;", iface->mName.c_str(), FPSCAP_LIMIT);
+		   "  my%s::FPSLimit = %d;\n", iface->mName.c_str(), FPSCAP_LIMIT);
 	}
 #endif
 	fprintf(f, "  mOriginal = aOriginal;\n");
@@ -566,21 +601,23 @@ void printCpp(int aIfaceNo)
 
 #ifndef DISABLE_FPSCAP
 	if (
-		(iface->mMethod[i]->mFuncName == "EndScene") &&
-		(iface->mName == "myIDirect3DDevice2") ||
-		(iface->mName == "myIDirect3DDevice3") ||
-		(iface->mName == "myIDirect3DDevice7")
+		(iface->mMethod[i]->mFuncName == "EndScene") && (
+			(iface->mName == "IDirect3DDevice") ||
+			(iface->mName == "IDirect3DDevice2") ||
+			(iface->mName == "IDirect3DDevice3") ||
+			(iface->mName == "IDirect3DDevice7")
+		)
 	) {
-		fprintf(f, "  __int64 t1 = %s::LastFrameTime\n", iface->mName.c_str());
-		fprintf(f, "  __int64 t2 = timer.GetCount();");
-		fprintf(f, "  double delta = timer.CalcTimeDelta(t1, t2);");
-		fprintf(f, "  double max = 1000000.0 / %s::FPSLimit;", iface->mName.c_str());
-		fprintf(f, "  while (delta < max) {");
-		fprintf(f, "    t2 = timer.GetCount();");
-		fprintf(f, "    delta = timer.CalcTimeDelta(t1, t2);");
-		fprintf(f, "  }");
+		fprintf(f, "  long long t1 = my%s::LastFrameTime;\n", iface->mName.c_str());
+		fprintf(f, "  long long t2 = my%s::Timer.GetCount();\n", iface->mName.c_str());
+		fprintf(f, "  double delta = my%s::Timer.CalcTimeDelta(t1, t2);\n", iface->mName.c_str());
+		fprintf(f, "  double max = 1000000.0 / my%s::FPSLimit;\n", iface->mName.c_str());
+		fprintf(f, "  while (delta < max) {\n");
+		fprintf(f, "    t2 = my%s::Timer.GetCount();\n", iface->mName.c_str());
+		fprintf(f, "    delta = my%s::Timer.CalcTimeDelta(t1, t2);\n", iface->mName.c_str());
+		fprintf(f, "  }\n\n");
 
-		fprintf(f, "  %s::LastFrameTime = t2;\n", iface->mName.c_str());
+		fprintf(f, "  my%s::LastFrameTime = t2;\n", iface->mName.c_str());
 	}
 #endif
 
@@ -869,9 +906,9 @@ void printCpp(int aIfaceNo)
 
 void main(void)
 {
-	parse("E:\\dx1dx7\\dx8sdk\\include\\ddraw.h");
-	parse("E:\\dx1dx7\\dx8sdk\\include\\ddrawex.h");
-	parse("E:\\dx1dx7\\dx8sdk\\include\\d3d.h");
+	parse("..\\libs\\DirectX81SDK\\include\\ddraw.h");
+	parse("..\\libs\\DirectX81SDK\\include\\ddrawex.h");
+	parse("..\\libs\\DirectX81SDK\\include\\d3d.h");
 	printf("Generating");
 	int i;
 	for (i = 0; i < (signed)gIface.size(); i++)
