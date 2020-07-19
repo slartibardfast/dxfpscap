@@ -1,13 +1,17 @@
 
 dxfpscap
 =========
-limits 3D Games with QueryPerformanceCounter() API, most instructions are per original dxwrapper.
+limits 3D Games with QueryPerformanceCounter() API to 30 Frames Per Second
 
-tested with VS 2005 & Windows 98 SE, largely with Star Wars:Shadows of the Empire.
+requires at least a pentium pro for accurate timing API to function
 
-requires at least a pentium pro for accurate timing
+usage of dxfpscap
+=========
+place all DLLs in the game directory you wish to cap frame rate at 30 frames per second.
 
-release with instructions for patching .exe 's to use wrapper on Windows 9x to follow soon.
+in the case of most Windows 9x systems the game exe
+might need to be hex edited (at own risk) to replace
+references to ddraw.dll with 30cap.dll
 
 dxwrapper
 =========
