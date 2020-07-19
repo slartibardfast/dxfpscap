@@ -5,12 +5,15 @@
 #include <vector>
 #include <string>
 
-#define VERSION "ddwrappergen 1.130524 (c)2013 Jari Komppa http://iki.fi/sol/"
+#define VERSION "dxfpscap 1.20200717 based on ddwrappergen 1.130524 (c)2013 Jari Komppa http://iki.fi/sol/"
 
 //#define DISABLE_LOGGING
 //#define DISABLE_CRITICAL_SECTION
 //#define DISABLE_PASSTHROUGH
 //#define ADD_UNDEFINED_MACRO
+
+//#define DISABLE_FPSCAP
+#define FPSCAP_LIMIT 30
 
 using namespace std;
 
@@ -505,6 +508,9 @@ void printCpp(int aIfaceNo)
 	banner(f);
 
 	fprintf(f, "#include \"wrapper.h\"\n");	
+#ifndef DISABLE_FPSCAP
+	fprintf(f, "#include \"timer.h\"\n\n");	
+#endif
 	fprintf(f, "#include \"my%s.h\"\n\n", iface->mName.c_str());
 
 #ifdef DISABLE_PASSTHROUGH
@@ -519,6 +525,18 @@ void printCpp(int aIfaceNo)
 #ifdef DISABLE_PASSTHROUGH
 	fprintf(f, "  mRef = 1;\n");
 #else
+#ifndef DISABLE_FPSCAP
+	if (
+		(iface->mName == "myIDirect3DDevice2") ||
+		(iface->mName == "myIDirect3DDevice3") ||
+		(iface->mName == "myIDirect3DDevice7")
+	) {
+		fprintf(f, "\n"
+		   "%s::LastFrameTime = timer.GetCount();");
+		fprintf(f, "\n"
+		   "%s::FPSLimit = %d;", iface->mName.c_str(), FPSCAP_LIMIT);
+	}
+#endif
 	fprintf(f, "  mOriginal = aOriginal;\n");
 #endif
     fprintf(f,"}\n"
@@ -544,6 +562,26 @@ void printCpp(int aIfaceNo)
 
 #ifndef DISABLE_CRITICAL_SECTION
 		fprintf(f, "  EnterCriticalSection(&gCS);\n");
+#endif
+
+#ifndef DISABLE_FPSCAP
+	if (
+		(iface->mMethod[i]->mFuncName == "EndScene") &&
+		(iface->mName == "myIDirect3DDevice2") ||
+		(iface->mName == "myIDirect3DDevice3") ||
+		(iface->mName == "myIDirect3DDevice7")
+	) {
+		fprintf(f, "  __int64 t1 = %s::LastFrameTime\n", iface->mName.c_str());
+		fprintf(f, "  __int64 t2 = timer.GetCount();");
+		fprintf(f, "  double delta = timer.CalcTimeDelta(t1, t2);");
+		fprintf(f, "  double max = 1000000.0 / %s::FPSLimit;", iface->mName.c_str());
+		fprintf(f, "  while (delta < max) {");
+		fprintf(f, "    t2 = timer.GetCount();");
+		fprintf(f, "    delta = timer.CalcTimeDelta(t1, t2);");
+		fprintf(f, "  }");
+
+		fprintf(f, "  %s::LastFrameTime = t2;\n", iface->mName.c_str());
+	}
 #endif
 
 #ifdef ADD_UNDEFINED_MACRO
