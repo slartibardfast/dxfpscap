@@ -5,6 +5,10 @@ limits 3D Games with QueryPerformanceCounter() API to 30 Frames Per Second
 
 requires at least a pentium pro for accurate timing API to function
 
+for updates or to request different frame rate caps please go to the github:
+
+https://github.com/slartibardfast/dxfpscap
+
 usage of dxfpscap
 =========
 place all DLLs in the game directory you wish to cap frame rate at 30 frames per second.
