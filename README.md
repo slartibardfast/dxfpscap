@@ -21,6 +21,9 @@ references to ddraw.dll with 30cap.dll
 
 run dxfpscap.exe to configure or manually edit dxfpscap.json
 
+dxfpscap.json must be placed in the execution path of the application
+(look for creation of fpscap_0.log, this is where dxfpscap.json should be placed)
+
 dxwrapper
 =========
 
