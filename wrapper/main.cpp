@@ -3,11 +3,16 @@
 #define WIN32_LEAN_AND_MEAN
 #define _CRT_SECURE_NO_DEPRECATE
 
+#include <iostream>
+#include <fstream>
+
 #include <windows.h>
 #include <shlobj.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <varargs.h>
+
+#include "json/json.h"
 //#include "ddoutput.h"
 
 CRITICAL_SECTION gCS;
@@ -44,6 +49,21 @@ void poptab()
 	if (gTabStops < 0)
 		gTabStops = 0;
 }
+
+#ifndef DISABLE_FPSCAP
+double read_fps_limit() {
+	try {
+		Json::Value root; 
+		std::ifstream dxfpscap_config("dxfpscap.json", std::ifstream::binary);
+		dxfpscap_config >> root;
+		double fps_numerator = root.get("fps_numerator", 30 ).asInt();
+		double fps_denominator = root.get("fps_denominator", 1 ).asInt();
+		return fps_numerator/fps_denominator;
+	} catch (...) {
+		return 30.0/1.0;
+	}
+}
+#endif
 
 long long milliseconds_now() {
     static LARGE_INTEGER s_frequency;

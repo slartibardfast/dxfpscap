@@ -58,6 +58,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(SolutionDir)$(ConfigurationName)\vs2005_w95.lib"
+				IgnoreAllDefaultLibraries="false"
 				ModuleDefinitionFile="exports.def"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -128,6 +130,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(SolutionDir)$(ConfigurationName)\vs2005_w95.lib"
 				ModuleDefinitionFile="exports.def"
 				OptimizeForWindows98="2"
 				LinkTimeCodeGeneration="1"
@@ -159,6 +162,10 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{67E76CB4-C52F-4DB7-8F52-A1D2AC57B185}"
+			RelativePathToProject=".\vs2005_w95\vs2005_w95.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -175,11 +182,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\IsDebuggerPresent.asm"
-				>
-			</File>
-			<File
-				RelativePath=".\IsDebuggerPresent.cpp"
+				RelativePath=".\jsoncpp.cpp"
 				>
 			</File>
 			<File
@@ -332,6 +335,14 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\json\json-forwards.h"
+				>
+			</File>
+			<File
+				RelativePath=".\json\json.h"
+				>
+			</File>
 			<File
 				RelativePath=".\myIDirect3D.h"
 				>

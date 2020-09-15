@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-#define VERSION "dxfpscap 1.20200717 based on ddwrappergen 1.130524 (c)2013 Jari Komppa http://iki.fi/sol/"
+#define VERSION "dxfpscap 1.20200915 based on ddwrappergen 1.130524 (c)2013 Jari Komppa http://iki.fi/sol/"
 
 #define DISABLE_LOGGING
 //#define DISABLE_CRITICAL_SECTION
@@ -445,7 +445,7 @@ void printH(int aIfaceNo)
 		fprintf(f, "private:\n");
 		fprintf(f, "  Timer Timer;\n");
 		fprintf(f, "  static long long LastFrameTime;\n");
-		fprintf(f, "  long long FPSLimit;\n");
+		fprintf(f, "  double FPSLimit;\n");
 	}
 #endif
 	fprintf(f, "};\n\n");
@@ -569,7 +569,7 @@ void printCpp(int aIfaceNo)
 		fprintf(f, "\n"
 		   "  my%s::LastFrameTime = my%s::Timer.GetCount();", iface->mName.c_str(), iface->mName.c_str());
 		fprintf(f, "\n"
-		   "  my%s::FPSLimit = %d;\n", iface->mName.c_str(), FPSCAP_LIMIT);
+		   "  my%s::FPSLimit = read_fps_limit();\n", iface->mName.c_str());
 	}
 #endif
 	fprintf(f, "  mOriginal = aOriginal;\n");

@@ -5,6 +5,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrapper", "wrapper\wrapper.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrappergen", "wrappergen\wrappergen.vcproj", "{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dxfpscap", "..\dxwrapper-fpscap\dxfpscap\dxfpscap.vcproj", "{498A589F-0710-46E2-A143-C367121C2AED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DB99B7C3-21F7-4BBC-ABBD-7547A8668C8E}"
+	ProjectSection(SolutionItems) = preProject
+		..\dxwrapper-fpscap\LICENSE.md = ..\dxwrapper-fpscap\LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vs2005_w95", "vs2005_w95\vs2005_w95.vcproj", "{67E76CB4-C52F-4DB7-8F52-A1D2AC57B185}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +29,14 @@ Global
 		{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}.Debug|Win32.Build.0 = Debug|Win32
 		{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}.Release|Win32.ActiveCfg = Release|Win32
 		{2F5471CB-B13E-4C13-A8B1-DBF89CE15435}.Release|Win32.Build.0 = Release|Win32
+		{498A589F-0710-46E2-A143-C367121C2AED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{498A589F-0710-46E2-A143-C367121C2AED}.Debug|Win32.Build.0 = Debug|Win32
+		{498A589F-0710-46E2-A143-C367121C2AED}.Release|Win32.ActiveCfg = Release|Win32
+		{498A589F-0710-46E2-A143-C367121C2AED}.Release|Win32.Build.0 = Release|Win32
+		{67E76CB4-C52F-4DB7-8F52-A1D2AC57B185}.Debug|Win32.ActiveCfg = Debug|Win32
+		{67E76CB4-C52F-4DB7-8F52-A1D2AC57B185}.Debug|Win32.Build.0 = Debug|Win32
+		{67E76CB4-C52F-4DB7-8F52-A1D2AC57B185}.Release|Win32.ActiveCfg = Release|Win32
+		{67E76CB4-C52F-4DB7-8F52-A1D2AC57B185}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

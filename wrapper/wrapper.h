@@ -52,6 +52,10 @@ void *wrapfetch(void * aOriginal);
 void pushtab();
 void poptab();
 
+#ifndef DISABLE_FPSCAP
+double read_fps_limit();
+#endif
+
 #ifdef _DEBUG
 #define DEBUGMESS(a) OutputDebugStringA(a)
 #else

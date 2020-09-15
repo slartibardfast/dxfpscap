@@ -18,3 +18,12 @@ ipch/
 *.filters
 *.opensdf
 *.sdf
+
+#generated files
+wrapper/my*.*
+*.user
+
+*.suo
+*.ncb
+libs/
+public/
