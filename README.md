@@ -1,10 +1,9 @@
 
 dxfpscap
 =========
-limits 3D Games with QueryPerformanceCounter() API to 30 Frames Per Second
+limits 3D Games with QueryPerformanceCounter() API to arbrtary frame rates
 
 requires at least a pentium pro for accurate timing API to function
-
 
 it is also completely agnostic about VSYNC, frame limit will align if it is enabled.
 
@@ -19,6 +18,8 @@ place all DLLs in the game directory you wish to cap frame rate at 30 frames per
 in the case of most Windows 9x systems the game exe
 might need to be hex edited (at own risk) to replace
 references to ddraw.dll with 30cap.dll
+
+run dxfpscap.exe to configure or manually edit dxfpscap.json
 
 dxwrapper
 =========
