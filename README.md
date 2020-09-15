@@ -3,7 +3,7 @@ dxfpscap
 =========
 limits 3D Games with QueryPerformanceCounter() API to arbrtary frame rates
 
-requires at least a pentium pro for accurate timing API to function
+requires at least Windows 95 to execute & a Pentium Pro for accurate timing API
 
 it is also completely agnostic about VSYNC, frame limit will align if it is enabled.
 
